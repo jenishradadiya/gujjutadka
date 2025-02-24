@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Now - Gujju Tadka</title>
+    <link rel="stylesheet" href="order.css">
+</head>
+<body>
+
+    <header>
+        <h1>Gujju Tadka</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="order.html" class="active">Order Now</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <section class="order-page">
+        <div class="food-preview">
+            <img id="dishImage" src="images/khaman-bg.jpg" alt="Fafda">
+        </div>
+        <div class="order-form">
+            <h2>Place Your Order</h2>
+            <form action="#" method="POST">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="address">Delivery Address</label>
+                <textarea id="address" name="address" required></textarea>
+
+                <label for="food-item">Select Dish</label>
+                <select id="food-item" name="food-item" onchange="updateImage()">
+                    <option value="khaman" data-img="images/khaman-bg.jpg">Khaman - ₹60</option>
+                    <option value="dhokla" data-img="images/dhokda-bg.jpeg">Dhokla - ₹50</option>
+                    <option value="jalebi" data-img="images/fafda-jalebi.jpg">Fafda-Jalebi - ₹90</option>
+                    <option value="jalebi" data-img="images/handvo.jpeg">Handvo - ₹40</option>
+                    <option value="jalebi" data-img="images/thepla.png">Thepla - ₹45</option>
+                    <option value="jalebi" data-img="images/Khandvi.avif">Khandvi - ₹50</option>
+                    <option value="jalebi" data-img="images/pava bataka.jpg">Pava Bataka - ₹30</option>
+                    <option value="jalebi" data-img="images/gujthali.jpg">Gujrati Thali - ₹350</option>
+                    <option value="jalebi" data-img="images/kathiyavadi thali.jpg">Kathiyavadi Thali - ₹300</option>
+                    <option value="jalebi" data-img="images/sev tamata.jpeg">Sev-Tameta - ₹140</option>
+                    <option value="jalebi" data-img="images/chas.jpg">Chas - ₹30</option>
+                    <option value="jalebi" data-img="images/papad.jpeg">Papad - ₹20</option>
+                    <option value="jalebi" data-img="images/dal bhat.jpeg">Dal-bhatt - ₹140</option>
+                    <option value="jalebi" data-img="images/khichdi-recipe.jpg">Kadhi-khichdi - ₹130</option>
+                    <option value="jalebi" data-img="images/gulab jambu.jpg">Gulab-Jamun - ₹70</option>
+                    <option value="jalebi" data-img="images/punjabi.avif">Punjabi Thali - ₹250</option>
+                    <option value="jalebi" data-img="images/dal-bati-churma.jpg">Dal-bati - ₹130</option>
+                    <option value="jalebi" data-img="images/coc.jpg">Coca-Cola - ₹20</option>
+                    <option value="jalebi" data-img="images/Sprite-Gasamore.jpg">Sprite - ₹20</option>
+                    <option value="jalebi" data-img="images/dew.jpg">Mountain Dew - ₹20</option>
+                    <option value="jalebi" data-img="images/maaza.jpg">Mazza - ₹20</option>
+                    <option value="jalebi" data-img="images/thums-up-1.avif">Thams-Up - ₹20</option>
+                    <option value="jalebi" data-img="images/chocobar.jpg">Chocobar - ₹20</option>
+                    <option value="jalebi" data-img="images/Cassatta icecream 🍨.jpeg">Cassatta - ₹60</option>
+                    <option value="jalebi" data-img="images/dessert-3.jpg">Brownie - ₹50</option>
+                    <option value="jalebi" data-img="images/dessert-4.jpg">Vanila Cone - ₹45</option>
+                    <option value="jalebi" data-img="images/dessert-5.jpg">Strawberry ice cream - ₹50</option>
+                    <option value="jalebi" data-img="images/nuts.jpg"></option>American Nuts icecream - ₹30</option>
+
+                </select>
+
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+                <button type="submit" class="order-btn">Place Order</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        function updateImage() {
+            const select = document.getElementById("food-item");
+            const image = document.getElementById("dishImage");
+            const selectedOption = select.options[select.selectedIndex];
+            image.src = selectedOption.getAttribute("data-img");
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Gujju Tadka</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">  
+    <style>
+      .voice-command {
+        text-align: center;
+        margin: 20px;
+        animation: fadeIn 1.5s ease-in-out;
+      }
+      .voice-button {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        background: #e6b906;
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.3s;
+      }
+      .voice-button:hover {
+        transform: scale(1.1);
+      }
+      .output {
+        font-size: 20px;
+        margin-top: 10px;
+      }
+      .menu-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        animation: popUp 0.5s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes popUp {
+        from { transform: translate(-50%, -60%); opacity: 0; }
+        to { transform: translate(-50%, -50%); opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Gujju Tadka</a>
+      </div>
+    </nav>
+    <div class="voice-command">
+      <h2>Order with Your Voice</h2>
+      <button class="voice-button" onclick="startRecognition()">🎙️ Speak Now</button>
+      <p class="output">Say a dish name to open the menu</p>
+    </div>
+    <script>
+      function startRecognition() {
+        const output = document.querySelector(".output");
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.continuous = false;
+        recognition.start();       
+        recognition.onresult = function(event) {
+          const spokenText = event.results[0][0].transcript.toLowerCase().trim();
+          output.textContent = "You said: " + spokenText;
+          checkMenu(spokenText);
+        };        
+        recognition.onspeechend = function() {
+          recognition.stop();
+        };       
+        recognition.onerror = function(event) {
+          output.textContent = "Error recognizing speech: " + event.error;
+        };
+      }     
+      function checkMenu(item) {
+        const menuItems = {
+          "khaman": "images/khaman-bg.jpg",
+          "dhokla": "images/dhokda-bg.jpeg",
+          "fafda": "images/fafda-bg.jpg",
+          "jalebi": "images/jalebi-bg.jpg",
+          "handvo": "images/handvo.jpeg",
+          "thepla": "images/thepla.png",
+          "khandvi": "images/Khandvi.avif"
+        };        
+        if (menuItems[item]) {
+          document.body.innerHTML += `<div class='menu-popup'>
+                                        <h3>${item.charAt(0).toUpperCase() + item.slice(1)}</h3>
+                                        <img src='${menuItems[item]}' alt='${item}' style='width:300px;'>
+                                        <p><a href='order.html' class='btn btn-primary'>Order now</a></p>
+                                        <button onclick='closePopup()'>Close</button>
+                                      </div>`;
+          speakOrder(item);
+        } else {
+          alert("Sorry, " + item + " is not on the menu.");
+        }
+      }    
+      function closePopup() {
+        document.querySelector(".menu-popup").remove();
+      }      
+      function speakOrder(item) {
+        const speech = new SpeechSynthesisUtterance("You have selected " + item + ". Click order now to proceed.");
+        window.speechSynthesis.speak(speech);
+      }     
+      window.onload = function() {
+        if ('speechSynthesis' in window) {
+          console.log("Speech synthesis supported");
+        } else {
+          alert("Sorry, your browser does not support speech synthesis.");
+        }
+      };
+    </script>
+  </body>
+</html>
